@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 int main(){
-    FILE* data = fopen("data.csv", "r");
+    FILE* data = fopen("data_pegawai.csv", "r");
     
     if(data == NULL){
             printf("Err: file database tidak dapat ditemukan!");
@@ -19,7 +19,8 @@ int main(){
     
     char (*sNIP)[20] = malloc(asize * sizeof(*sNIP));
     char (*sNama)[50] = malloc(asize * sizeof(*sNama));
-    int* iUsia = (int*)malloc(asize * sizeof(int));
+    char (*sGender)[2] = malloc(asize * sizeof(*sGender));
+    char (*sGol)[4] = malloc(asize * sizeof(*sGol));
     
     fseek(data, 0, SEEK_SET);
     
@@ -39,32 +40,25 @@ int main(){
             tbuff = strtok(NULL, ";");
             strcpy(sNama[pos], tbuff);
 
-            //Usia
+            //Kelamin
             tbuff = strtok(NULL, ";");
-            iUsia[pos] = (int)strtol(tbuff, NULL, 10);
-            agemax = iUsia[pos] > agemax?iUsia[pos]:agemax;
-            agemin = agemin < iUsia[pos]?agemin:iUsia[pos];
+            strcpy(sGender[pos], tbuff);
+
+            //Golongan
+            tbuff = strtok(NULL, ":");
+            strcpy(sGol[pos], tbuff);
         }
         pos++;
     }
 
-    int rangesize = agemax - agemin + 1;
-
-    int* agechart = (int*)calloc(rangesize, sizeof(int));
-
     for(int i = 0; i < asize; i++){
-        agechart[iUsia[i] - agemin]++;
-    }
-
-    //printf("min age: %d, max age: %d, chart size: %d\n", agemin, agemax, rangesize);
-
-    for(int i = 0; i < rangesize; i++){
-        printf("%d: %d\n", agemin + i, agechart[i]);
+        printf("%s %s %s %s\n", sNIP[i], sNama[i], sGender[i], sGol[i]);
     }
 
     free(sNIP);
     free(sNama);
-    free(iUsia);
+    free(sGender);
+    free(sGol);
     
     getc(stdin); //press any key...
 
