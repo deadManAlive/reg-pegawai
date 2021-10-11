@@ -26,5 +26,5 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(CC) $(LINKOBJ) -o "RegPegawai.exe" $(LIBS)
 
-main.o: main.c
+main.o: main.c 
 	$(CC) -c main.c -o main.o $(CFLAGS)

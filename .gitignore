@@ -1,7 +1,9 @@
 # folders
 .venv/**
+.vscode/**
 
 # files
 *.exe
 *.o
 *.pdf
+*.csv

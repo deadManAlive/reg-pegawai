@@ -2,11 +2,13 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "errmsg.h"
+
 int main(){
     FILE* data = fopen("data_pegawai.csv", "r");
     
     if(data == NULL){
-            printf("Err: file database tidak dapat ditemukan!");
+            printf(ERR1);
             return -1;
     }
     
