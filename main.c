@@ -1,11 +1,11 @@
-#include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 
 #include "errmsg.h"
+#include "reg.h"
 
 int main(){
-    FILE* data = fopen("data_pegawai.csv", "r");
+    //start of data parsing process
+    FILE* data = fopen("data_pegawai.csv", "rw");
     
     if(data == NULL){
             printf(ERR1);
@@ -17,12 +17,13 @@ int main(){
              size = (c == '\n')?size+1:size;
     }
     
-    int asize = size - 1; //exclude header
+    int asize = size - 1; //size without header
     
     char (*sNIP)[20] = malloc(asize * sizeof(*sNIP));
     char (*sNama)[50] = malloc(asize * sizeof(*sNama));
-    char (*sGender)[2] = malloc(asize * sizeof(*sGender));
-    char (*sGol)[4] = malloc(asize * sizeof(*sGol));
+    // char (*sGender)[2] = malloc(asize * sizeof(*sGender));
+    char *sGender = malloc(asize * sizeof(sGender));
+    char (*sGol)[5] = malloc(asize * sizeof(*sGol));
     
     fseek(data, 0, SEEK_SET);
     
@@ -31,6 +32,7 @@ int main(){
     int agemax = 0;
     
     int pos = 0;
+    char gdrctr[2];
     while(fgets(csv_line_ctr, 100, data)){
         fscanf(data, "%[^\n]", csv_line_ctr);
         if(strcmp(csv_line_ctr, "\n") != 0){
@@ -44,7 +46,9 @@ int main(){
 
             //Kelamin
             tbuff = strtok(NULL, ";");
-            strcpy(sGender[pos], tbuff);
+            // strcpy(sGender[pos], tbuff);
+            strcpy(gdrctr, tbuff);
+            sGender[pos] = tbuff[0];
 
             //Golongan
             tbuff = strtok(NULL, ":");
@@ -52,10 +56,13 @@ int main(){
         }
         pos++;
     }
+    //end of data parsing process
 
     for(int i = 0; i < asize; i++){
-        printf("%s %s %s %s\n", sNIP[i], sNama[i], sGender[i], sGol[i]);
+        printf("%s %s %c %s\n", sNIP[i], sNama[i], sGender[i], sGol[i]);
     }
+
+    addData(sNIP, sNama, sGender, sGol, &size);
 
     free(sNIP);
     free(sNama);
