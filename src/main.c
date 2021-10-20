@@ -28,8 +28,6 @@ int main(){
     fseek(data, 0, SEEK_SET);
     
     char csv_line_ctr[100];
-    int agemin = 100;
-    int agemax = 0;
     
     int pos = 0;
     char gdrctr[2];
