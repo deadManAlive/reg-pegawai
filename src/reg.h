@@ -5,6 +5,7 @@
 #include <string.h>
 
 //Function to input data, add to array, and increment current data size
+void dataPrint(char**, char**, char*, char**, int*);
 void addData(char**, char**, char*, char**, int*);
 
 #endif

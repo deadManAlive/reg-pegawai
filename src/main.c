@@ -1,5 +1,3 @@
-#include <stdlib.h>
-
 #include "errmsg.h"
 #include "reg.h"
 
@@ -19,12 +17,18 @@ int main(){
     
     int asize = size - 1; //size without header
     
-    char (*sNIP)[20] = malloc(asize * sizeof(*sNIP));
-    char (*sNama)[50] = malloc(asize * sizeof(*sNama));
-    // char (*sGender)[2] = malloc(asize * sizeof(*sGender));
-    char *sGender = malloc(asize * sizeof(sGender));
-    char (*sGol)[5] = malloc(asize * sizeof(*sGol));
-    
+    //container construction
+    char **sNIP = malloc(asize * sizeof(char*));
+    char **sNama = malloc(asize * sizeof(char*));
+    char *sGender = malloc(asize * sizeof(char));
+    char **sGol = malloc(asize * sizeof(char*));
+
+    for(int i = 0; i < asize; i++){
+        sNIP[i] = (char*)malloc(20);
+        sNama[i] = (char*)malloc(50);
+        sGol[i] = (char*)malloc(5);
+    }
+
     fseek(data, 0, SEEK_SET);
     
     char csv_line_ctr[100];
@@ -56,16 +60,14 @@ int main(){
     }
     //end of data parsing process
 
-    for(int i = 0; i < asize; i++){
-        printf("%s %s %c %s\n", sNIP[i], sNama[i], sGender[i], sGol[i]);
-    }
+    dataPrint(sNIP, sNama, sGender, sGol, &asize);
 
-    addData(sNIP, sNama, sGender, sGol, &size);
+    addData(sNIP, sNama, sGender, sGol, &asize);
 
-    free(sNIP);
-    free(sNama);
+    freestringsarr(sNIP, asize);
+    freestringsarr(sNama, asize);
+    freestringsarr(sGol, asize);
     free(sGender);
-    free(sGol);
     
     getc(stdin); //press any key...
 

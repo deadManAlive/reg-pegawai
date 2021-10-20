@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 //BOOL
 #define BOOL uint8_t
@@ -11,5 +12,6 @@
 
 //funcs
 void clearbuffer();
+void freestringsarr(char**, int);
 
 #endif

@@ -1,7 +1,7 @@
 from faker import Faker
 from datetime import date,datetime
 import pandas as pd
-from random import choices, random, seed,randint,choice
+from random import seed,randint,choice
 import sys
 
 number_of_employees = int(sys.argv[1]) if len(sys.argv) > 1 else 20
