@@ -1,10 +1,5 @@
-#ifndef REG_H_
-#define REG_H_
+#include "reg.h"
 
-#include "generic.h"
-#include <string.h>
-
-//Function to input data, add to array, and increment current data size
 void addData(char** nip, char** nama, char* gender, char** gol, int* current_size){
     char nipctr[20];
     char namactr[50];
@@ -31,8 +26,8 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
         golctr[strcspn(golctr, "\n")] = 0;
 
         printf("\n~~verifikasi~~\n");
-        printf("%-*s%-20s%-7s%-s\n", strlen(namactr)>4?strlen(namactr):5, "Nama", "NIP", "Gender", "Golongan");
-        printf("%-*s%-20s%-7c%s\n\n", strlen(namactr)>4?strlen(namactr):5, namactr, nipctr, genderctr[0], golctr);
+        printf("%-*s%-20s%-7s%-s\n", strlen(namactr)>4?strlen(namactr)+1:5, "Nama", "NIP", "Gender", "Golongan");
+        printf("%-*s%-20s%-7c%s\n\n", strlen(namactr)>4?strlen(namactr)+1:5, namactr, nipctr, genderctr[0], golctr);
 
         printf("Apakah data sudah benar? [y/n]: ");
         verfresp = getc(stdin);
@@ -44,5 +39,3 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
         }
     }
 }
-
-#endif

@@ -1,7 +1,7 @@
 [Project]
 FileName=RegPegawai.dev
 Name=RegPegawai
-UnitCount=3
+UnitCount=6
 Type=1
 Ver=1
 ObjFiles=
@@ -30,9 +30,9 @@ CompilerSet=0
 CompilerSettings=
 
 [Unit1]
-FileName=main.c
+FileName=src\errmsg.h
 CompileCpp=0
-Folder=
+Folder=RegPegawai
 Compile=1
 Link=1
 Priority=1000
@@ -58,9 +58,9 @@ ProductVersion=
 AutoIncBuildNr=0
 
 [Unit2]
-FileName=errmsg.h
+FileName=src\generic.c
 CompileCpp=0
-Folder=
+Folder=RegPegawai
 Compile=1
 Link=1
 Priority=1000
@@ -68,7 +68,37 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=reg.h
+FileName=src\generic.h
+CompileCpp=0
+Folder=RegPegawai
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit4]
+FileName=src\main.c
+CompileCpp=0
+Folder=RegPegawai
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit5]
+FileName=src\reg.c
+CompileCpp=0
+Folder=RegPegawai
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit6]
+FileName=src\reg.h
 CompileCpp=0
 Folder=RegPegawai
 Compile=1

@@ -3,13 +3,13 @@
 
 #include <stdint.h>
 #include <stdio.h>
+
 //BOOL
 #define BOOL uint8_t
 #define TRUE 1
 #define FALSE 0
 
-void clearbuffer(){
-    while(getc(stdin) != '\n'){}
-}
+//funcs
+void clearbuffer();
 
 #endif
