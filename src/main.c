@@ -3,7 +3,7 @@
 
 int main(){
     //start of data parsing process
-    FILE* data = fopen("data_pegawai.csv", "rw");
+    FILE* data = fopen(DATABASE, "rw");
     
     if(data == NULL){
             printf(ERR1);
@@ -64,9 +64,11 @@ int main(){
 
     addData(sNIP, sNama, sGender, sGol, &asize);
 
-    freestringsarr(sNIP, asize);
-    freestringsarr(sNama, asize);
-    freestringsarr(sGol, asize);
+    dataPrint(sNIP, sNama, sGender, sGol, &asize);
+
+    destroy(sNIP, asize);
+    destroy(sNama, asize);
+    destroy(sGol, asize);
     free(sGender);
     
     getc(stdin); //press any key...

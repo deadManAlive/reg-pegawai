@@ -2,9 +2,12 @@
 .venv/**
 .vscode/**
 build/**
+.idea/**
+cmake-build*/**
 
 # files
 *.exe
 *.o
 *.pdf
 *.csv
+

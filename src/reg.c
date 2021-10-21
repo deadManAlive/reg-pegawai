@@ -1,31 +1,5 @@
 #include "reg.h"
 
-static int dataSort(char** nip, char** nama, char* gender, char** gol, int* current_size,  //main array
-                     char newnip[20], char newname[50], char newgender, char newgol[5])     //new data container
-{ //sort by NIP
-    BOOL is_greater;
-    int strdiff;
-    for(int i = 0; i < *current_size; i++){
-        strdiff = strcmp(newnip, nip[i]);
-        if(strdiff > 0){
-            continue;
-        }
-        else if(strdiff < 0){
-            return i + 1;
-        }
-        else if(strdiff == 0){
-            printf("NIP yang persis sama ditemukan pada database!");
-            return -1;
-        }
-    }
-}
-
-void dataPrint(char** nip, char** nama, char* gender, char** gol, int* current_size){
-    for(int i = 0; i < *current_size; i++){
-        printf("%2d. %20s %50s %c %3s\n", i + 1, nip[i], nama[i], gender[i], gol[i]);
-    }
-}
-
 void addData(char** nip, char** nama, char* gender, char** gol, int* current_size){
     //new data container
     char nipctr[20];
@@ -33,9 +7,7 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
     char genderctr[4]; //fgets newline workaround
     char golctr[5];
 
-    int newdatapos;
-
-    BOOL inputloop = TRUE;
+    bool inputloop = true;
     char verfresp;
 
     while(inputloop){
@@ -61,13 +33,60 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
         printf("Apakah data sudah benar? [y/n]: ");
         verfresp = getc(stdin);
         if(verfresp == 'y'){
-            inputloop = FALSE;
+            int icsize = ++(*current_size);
+
+            char** tnip = realloc(nip, 20 * icsize);
+            if(tnip){ // != NULL
+                nip = tnip;
+                nip[icsize - 1] = malloc(20);
+                strcpy(nip[icsize - 1], nipctr);
+            }
+
+            char** tnama = realloc(nama, 50 * icsize);
+            if(tnama){
+                nama = tnama;
+                nama[icsize - 1] = malloc(50);
+                strcpy(nama[icsize - 1], namactr);
+            }
+
+            char* tgender = realloc(gender, icsize);
+            if(tgender){
+                gender = tgender;
+                gender[icsize - 1] = genderctr[0];
+            }
+
+            char** tgol = realloc(gol, 5 * icsize);
+            if(tgol){
+                gol = tgol;
+                gol[icsize - 1] = malloc(5);
+                strcpy(gol[icsize - 1], golctr);
+            }
+            // nip = realloc(nip, *current_size * sizeof(*nip));
+            // nama = realloc(nama, *current_size * sizeof(*nama));
+            // gender = realloc(gender, *current_size * sizeof(char));
+            // gol = realloc(gol, *current_size * sizeof(*gol));
+
+            // printf("%d ", sizeof(nip));
+
+            // nip[*current_size - 1] = (char*)malloc(20);
+            // nama[*current_size - 1] = (char*)malloc(50);
+            // gol[*current_size - 1] = (char*)malloc(5);
+
+            // strcpy(nip[*current_size - 1], nipctr);
+            // strcpy(nama[*current_size - 1], namactr);
+            // gender[*current_size - 1] = genderctr[0];
+            // strcpy(gol[*current_size - 1], golctr);
+
+            // destroy(tnip, icsize);
+            // destroy(tnama, icsize);
+            // destroy(tgol, icsize);
+            // free(tgender);
+
+            inputloop = false;
         }
         else{
             clearbuffer();
         }
 
-        newdatapos = dataSort(nip, nama, gender, gol, current_size, nipctr, namactr, genderctr[0], golctr);
-        printf("Posisi data baru: %d", newdatapos);
     }
 }

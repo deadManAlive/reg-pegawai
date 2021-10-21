@@ -5,13 +5,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define DATABASE "data_pegawai.csv"
+
 //BOOL
-#define BOOL uint8_t
-#define TRUE 1
-#define FALSE 0
+typedef enum _boolenum {
+    true = 1,
+    false = 0,
+    drift = -1
+} bool;
 
 //funcs
 void clearbuffer();
-void freestringsarr(char**, int);
+void destroy(char**, int);
+void dataPrint(char**, char**, char*, char**, int*);
 
 #endif
