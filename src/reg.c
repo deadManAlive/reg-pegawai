@@ -35,16 +35,16 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
         if(verfresp == 'y'){
             int icsize = ++(*current_size);
 
-            char** tnip = realloc(nip, 20 * icsize);
+            char* tnip = realloc(*nip, icsize);
             if(tnip){ // != NULL
-                nip = tnip;
+                *nip = tnip;
                 nip[icsize - 1] = malloc(20);
                 strcpy(nip[icsize - 1], nipctr);
             }
 
-            char** tnama = realloc(nama, 50 * icsize);
+            char* tnama = realloc(*nama, icsize);
             if(tnama){
-                nama = tnama;
+                *nama = tnama;
                 nama[icsize - 1] = malloc(50);
                 strcpy(nama[icsize - 1], namactr);
             }
@@ -55,32 +55,12 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
                 gender[icsize - 1] = genderctr[0];
             }
 
-            char** tgol = realloc(gol, 5 * icsize);
+            char* tgol = realloc(*gol, 5 * icsize);
             if(tgol){
-                gol = tgol;
+                *gol = tgol;
                 gol[icsize - 1] = malloc(5);
                 strcpy(gol[icsize - 1], golctr);
             }
-            // nip = realloc(nip, *current_size * sizeof(*nip));
-            // nama = realloc(nama, *current_size * sizeof(*nama));
-            // gender = realloc(gender, *current_size * sizeof(char));
-            // gol = realloc(gol, *current_size * sizeof(*gol));
-
-            // printf("%d ", sizeof(nip));
-
-            // nip[*current_size - 1] = (char*)malloc(20);
-            // nama[*current_size - 1] = (char*)malloc(50);
-            // gol[*current_size - 1] = (char*)malloc(5);
-
-            // strcpy(nip[*current_size - 1], nipctr);
-            // strcpy(nama[*current_size - 1], namactr);
-            // gender[*current_size - 1] = genderctr[0];
-            // strcpy(gol[*current_size - 1], golctr);
-
-            // destroy(tnip, icsize);
-            // destroy(tnama, icsize);
-            // destroy(tgol, icsize);
-            // free(tgender);
 
             inputloop = false;
         }

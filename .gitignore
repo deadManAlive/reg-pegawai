@@ -4,10 +4,13 @@
 build/**
 .idea/**
 cmake-build*/**
+.vs/**
+out/**
 
 # files
 *.exe
 *.o
 *.pdf
 *.csv
+*.json
 
