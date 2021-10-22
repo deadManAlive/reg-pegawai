@@ -3,7 +3,7 @@
 
 int main(){
     //start of data parsing process
-    FILE* data = fopen(DATABASE, "rw");
+    FILE* data = fopen(DATABASE, "r");
     
     if(data == NULL){
             printf("File data pegawai (data_pegawai.csv) tidak ditemukan!");
@@ -64,10 +64,11 @@ int main(){
     char inputopt;
     while(inputloop){
         //splash
-        printf("Program Registrasi Pegawai\n");
+        printf("\nProgram Registrasi Pegawai\n");
         printf("~~MENU~~\n");
         printf("d. daftar\n");
-        printf("c. lihat data\n");
+        printf("r. hapus data\n");
+        printf("v. lihat data\n");
         printf("x. keluar\n");
         printf("Masukkan input: ");
 
@@ -78,7 +79,11 @@ int main(){
                 getchar(); //eliminate \n
                 addData(sNIP, sNama, sGender, sGol, &asize);
                 break;
-            case 'c':
+            case 'r':
+                getchar();
+                removeData(sNIP, sNama, sGender, sGol, &asize);
+                break;
+            case 'v':
                 rowquicksort(sNIP, sNama, sGender, sGol, 0, asize - 1);
                 dataPrint(sNIP, sNama, sGender, sGol, &asize);
                 getchar(); //eliminate \n
@@ -92,6 +97,20 @@ int main(){
         }
     }
 
+    //end read file
+    fclose(data);
+
+    //file write proc.
+    data = fopen(DATABASE, "w");
+
+    fputs("NIP;Nama;Kelamin;Golongan\n", data); //header
+    char linectr[100];
+    for(int i = 0; i < asize; i++){
+        fprintf(data, "%s;%s;%c;%s\n", sNIP[i], sNama[i], sGender[i], sGol[i]);
+    }
+
+    fclose(data);
+
     destroy(sNIP, asize);
     destroy(sNama, asize);
     destroy(sGol, asize);
@@ -99,5 +118,5 @@ int main(){
     
     getc(stdin); //press any key...
 
-    return fclose(data);
+    return 0;
 }

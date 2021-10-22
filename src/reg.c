@@ -1,5 +1,7 @@
 #include "reg.h"
 
+#define ALLOCERR printf("!!Error in Allocation!!\n");
+
 void rowswap(char** nip, char** nama, char* gender, char** gol, int posA, int posB){
     char tnip[20];
     char tnama[50];
@@ -47,6 +49,16 @@ void rowquicksort(char** nip, char** nama, char* gender, char** gol, int low, in
     }
 }
 
+int getData(char** nip, int size, const char* query){
+    for(int i = 0; i < size; i++){
+        if(strcmp(query, nip[i]) == 0){
+            return i; //found
+        }
+    }
+    return -1; //not found
+}
+
+
 void addData(char** nip, char** nama, char* gender, char** gol, int* current_size){
     //new data container
     char nipctr[20];
@@ -58,21 +70,36 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
     char verfresp;
 
     while(inputloop){
-    //input phase
-        printf("==REGISTRASI==\n");
+        //input phase
+        printf("\n==REGISTRASI==\n");
+
         printf("Nama <Maks. 48 karakter termasuk spasi>                     : ");
         fgets(namactr, 50, stdin);
         namactr[strcspn(namactr, "\n")] = 0;
+
         printf("NIP <18 Angka>                                              : ");
         fgets(nipctr, 20, stdin);
         nipctr[strcspn(nipctr, "\n")] = 0;
+
+        //nip check mech.
+        if(strlen(nipctr) != 18){
+            printf("NIP tidak valid!\n");
+            continue;
+        }
+        if(getData(nip, *current_size, nipctr) != -1){
+            printf("NIP telah terdaftar dalam data!\n");
+            continue;
+        }
+
         printf("Kelamin <L/P>                                               : ");
         fgets(genderctr, 4, stdin);
         genderctr[strcspn(genderctr, "\n")] = 0;
+
         printf("Golongan <format: X-Y dengan X (1,2,3,4) dan Y (A,B,C,D)>   : ");
         fgets(golctr, 5, stdin);
         golctr[strcspn(golctr, "\n")] = 0;
 
+        //verf. phase
         printf("\n~~verifikasi~~\n");
         printf("%-*s%-20s%-7s%-s\n", strlen(namactr)>4?strlen(namactr)+1:5, "Nama", "NIP", "Gender", "Golongan");
         printf("%-*s%-20s%-7c%s\n\n", strlen(namactr)>4?strlen(namactr)+1:5, namactr, nipctr, genderctr[0], golctr);
@@ -80,33 +107,49 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
         printf("Apakah data sudah benar? [y/n]: ");
         verfresp = getc(stdin);
         if(verfresp == 'y'){
-            int icsize = ++(*current_size);
+            int nsize = ++(*current_size);
 
-            char* tnip = realloc(*nip, icsize);
+            char* tnip = realloc(*nip, nsize);
             if(tnip){ // != NULL
                 *nip = tnip;
-                nip[icsize - 1] = malloc(20);
-                strcpy(nip[icsize - 1], nipctr);
+                nip[nsize - 1] = malloc(20);
+                strcpy(nip[nsize - 1], nipctr);
+            }
+            else{
+                ALLOCERR
+                return;
             }
 
-            char* tnama = realloc(*nama, icsize);
+            char* tnama = realloc(*nama, nsize);
             if(tnama){
                 *nama = tnama;
-                nama[icsize - 1] = malloc(50);
-                strcpy(nama[icsize - 1], namactr);
+                nama[nsize - 1] = malloc(50);
+                strcpy(nama[nsize - 1], namactr);
+            }
+            else{
+                ALLOCERR
+                return;
             }
 
-            char* tgender = realloc(gender, icsize);
+            char* tgender = realloc(gender, nsize);
             if(tgender){
                 gender = tgender;
-                gender[icsize - 1] = genderctr[0];
+                gender[nsize - 1] = genderctr[0];
+            }
+            else{
+                ALLOCERR
+                return;
             }
 
-            char* tgol = realloc(*gol, 5 * icsize);
+            char* tgol = realloc(*gol, 5 * nsize);
             if(tgol){
                 *gol = tgol;
-                gol[icsize - 1] = malloc(5);
-                strcpy(gol[icsize - 1], golctr);
+                gol[nsize - 1] = malloc(5);
+                strcpy(gol[nsize - 1], golctr);
+            }
+            else{
+                ALLOCERR
+                return;
             }
 
             inputloop = false;
@@ -115,5 +158,89 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
             clearbuffer();
         }
 
+    }
+}
+
+void removeData(char** nip, char** nama, char* gender, char** gol, int* current_size){
+    if(*current_size == 0){
+        printf("Database kosong!");
+        return;
+    }
+    
+    char nipctr[20];
+    
+    printf("\n==UNREGISTRASI==\n");
+
+    bool inputloop = true;
+    char verfresp[5];
+
+    while(inputloop){
+        printf("Masukkan NIP: ");
+        fgets(nipctr, 20, stdin);
+        nipctr[strcspn(nipctr, "\n")] = 0;
+
+        int pos = getData(nip, *current_size, nipctr);
+
+        if(pos == -1){
+            printf("Data tidak ditemukan!\n");
+            continue;
+        }
+
+        printf("!!Program akan menghapus pegawai dengan data berikut dari database!!\n");
+        printf("%-*s%-20s%-7s%-s\n", strlen(nama[pos])>4?strlen(nama[pos])+1:5, "Nama", "NIP", "Gender", "Golongan");
+        printf("%-*s%-20s%-7c%s\n", strlen(nama[pos])>4?strlen(nama[pos])+1:5, nama[pos], nipctr, gender[pos], gol[pos]);
+        printf("!!Ketik 'YA' untuk melanjutkan: ");
+
+        fgets(verfresp, 5, stdin);
+        verfresp[strcspn(verfresp, "\n")] = 0;
+
+        if(strcmp(verfresp, "YA") != 0){
+            return;
+        }
+
+        //element removal proc.
+        int nsize = --(*current_size);
+        for(int i = pos; i < nsize; i++){
+            rowswap(nip, nama, gender, gol, i, i + 1);
+        }
+
+        //realoc to smaller array
+        char* tnip = realloc(*nip, nsize);
+        if(tnip){ // != NULL
+            *nip = tnip;
+        }
+        else{
+            ALLOCERR
+            return;
+        }
+
+        char* tnama = realloc(*nama, nsize);
+        if(tnama){
+            *nama = tnama;
+        }
+        else{
+            ALLOCERR
+            return;
+        }
+
+        char* tgender = realloc(gender, nsize);
+        if(tgender){
+            gender = tgender;
+        }
+        else{
+            ALLOCERR
+            return;
+        }
+
+        char* tgol = realloc(*gol, 5 * nsize);
+        if(tgol){
+            *gol = tgol;
+        }
+        else{
+            ALLOCERR
+            return;
+        }
+
+        inputloop = false;
     }
 }

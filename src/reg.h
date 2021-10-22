@@ -6,6 +6,7 @@
 
 //Function to input data, add to array, and increment current data size
 void rowquicksort(char** nip, char** nama, char* gender, char** gol, int low, int high);
+void removeData(char** nip, char** nama, char* gender, char** gol, int* current_size);
 void addData(char** nip, char** nama, char* gender, char** gol, int* current_size);
 
 #endif
