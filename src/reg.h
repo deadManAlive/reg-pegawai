@@ -5,6 +5,7 @@
 #include <string.h>
 
 //Function to input data, add to array, and increment current data size
-void addData(char**, char**, char*, char**, int*);
+void rowquicksort(char** nip, char** nama, char* gender, char** gol, int low, int high);
+void addData(char** nip, char** nama, char* gender, char** gol, int* current_size);
 
 #endif

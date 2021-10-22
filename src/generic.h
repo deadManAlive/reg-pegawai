@@ -11,12 +11,12 @@
 typedef enum _boolenum {
     true = 1,
     false = 0,
-    drift = -1
+    drift = -1 //in case undefined bool is necessary
 } bool;
 
 //funcs
-void clearbuffer();
-void destroy(char**, int);
-void dataPrint(char**, char**, char*, char**, int*);
+void clearbuffer(void);
+void destroy(char** arrstr, int size);
+void dataPrint(char** nip, char** nama, char* gender, char** gol, int* current_size);
 
 #endif

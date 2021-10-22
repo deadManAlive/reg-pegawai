@@ -1,4 +1,4 @@
-#include "errmsg.h"
+//main program
 #include "reg.h"
 
 int main(){
@@ -6,7 +6,7 @@ int main(){
     FILE* data = fopen(DATABASE, "rw");
     
     if(data == NULL){
-            printf(ERR1);
+            printf("File data pegawai (data_pegawai.csv) tidak ditemukan!");
             return -1;
     }
     
@@ -48,7 +48,6 @@ int main(){
 
             //Kelamin
             tbuff = strtok(NULL, ";");
-            // strcpy(sGender[pos], tbuff);
             strcpy(gdrctr, tbuff);
             sGender[pos] = tbuff[0];
 
@@ -60,11 +59,38 @@ int main(){
     }
     //end of data parsing process
 
-    dataPrint(sNIP, sNama, sGender, sGol, &asize);
+    //user interface loop
+    bool inputloop = true;
+    char inputopt;
+    while(inputloop){
+        //splash
+        printf("Program Registrasi Pegawai\n");
+        printf("~~MENU~~\n");
+        printf("d. daftar\n");
+        printf("c. lihat data\n");
+        printf("x. keluar\n");
+        printf("Masukkan input: ");
 
-    addData(sNIP, sNama, sGender, sGol, &asize);
+        inputopt = getchar();
 
-    dataPrint(sNIP, sNama, sGender, sGol, &asize);
+        switch(inputopt){
+            case 'd':
+                getchar(); //eliminate \n
+                addData(sNIP, sNama, sGender, sGol, &asize);
+                break;
+            case 'c':
+                rowquicksort(sNIP, sNama, sGender, sGol, 0, asize - 1);
+                dataPrint(sNIP, sNama, sGender, sGol, &asize);
+                getchar(); //eliminate \n
+                break;
+            case 'x':
+                printf("~~EXIT~~");
+                inputloop = false;
+                break;
+            default:
+                printf("Input tidak valid!\n");
+        }
+    }
 
     destroy(sNIP, asize);
     destroy(sNama, asize);

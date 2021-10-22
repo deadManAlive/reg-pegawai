@@ -1,5 +1,52 @@
 #include "reg.h"
 
+void rowswap(char** nip, char** nama, char* gender, char** gol, int posA, int posB){
+    char tnip[20];
+    char tnama[50];
+    char tgender;
+    char tgol[5];
+
+    strcpy(tnip, nip[posA]);
+    strcpy(nip[posA], nip[posB]);
+    strcpy(nip[posB], tnip);
+
+    strcpy(tnama, nama[posA]);
+    strcpy(nama[posA], nama[posB]);
+    strcpy(nama[posB], tnama);
+
+    tgender = gender[posA];
+    gender[posA] = gender[posB];
+    gender[posB] = tgender;
+
+    strcpy(tgol, gol[posA]);
+    strcpy(gol[posA], gol[posB]);
+    strcpy(gol[posB], tgol);
+}
+
+int partition(char** nip, char** nama, char* gender, char** gol, int low, int high){
+    char pivot[20];
+    strcpy(pivot, nip[high]);
+
+    int i = (low - 1);
+
+    for(int j = low; j < high; j++){
+        if(strcmp(pivot, nip[j]) > 0){
+            i++;
+            rowswap(nip, nama, gender, gol, i, j);
+        }
+    }
+    rowswap(nip, nama, gender, gol, i + 1, high);
+    return (i + 1);
+}
+
+void rowquicksort(char** nip, char** nama, char* gender, char** gol, int low, int high){
+    if(low < high){
+        int par = partition(nip, nama, gender, gol, low, high);
+        rowquicksort(nip, nama, gender, gol, low, par - 1);
+        rowquicksort(nip, nama, gender, gol, par + 1, high);
+    }
+}
+
 void addData(char** nip, char** nama, char* gender, char** gol, int* current_size){
     //new data container
     char nipctr[20];
