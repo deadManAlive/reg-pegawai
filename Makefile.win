@@ -5,8 +5,8 @@ CPP  = g++.exe
 CC   = gcc.exe
 WINDRES = windres.exe
 RES  = 
-OBJ  = src/generic.o src/main.o src/reg.o $(RES)
-LINKOBJ  = src/generic.o src/main.o src/reg.o $(RES)
+OBJ  = src/generic.o src/main.o src/reg.o src/stat.o $(RES)
+LINKOBJ  = src/generic.o src/main.o src/reg.o src/stat.o $(RES)
 LIBS =  -L"D:/Apps_c/Dev-Cpp/lib"  
 INCS =  -I"D:/Apps_c/Dev-Cpp/include" 
 CXXINCS =  -I"D:/Apps_c/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"D:/Apps_c/Dev-Cpp/include/c++/3.4.2/backward"  -I"D:/Apps_c/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"D:/Apps_c/Dev-Cpp/include/c++/3.4.2"  -I"D:/Apps_c/Dev-Cpp/include" 
@@ -34,3 +34,6 @@ src/main.o: src/main.c
 
 src/reg.o: src/reg.c 
 	$(CC) -c src/reg.c -o src/reg.o $(CFLAGS)
+
+src/stat.o: src/stat.c 
+	$(CC) -c src/stat.c -o src/stat.o $(CFLAGS)
