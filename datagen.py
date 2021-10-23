@@ -57,4 +57,4 @@ pd.set_option('display.max_columns', None)
 
 employees_df.to_csv('data_pegawai.csv', index=False, header=True, sep=';')
 
-print("Berhasil!");
+print("Berhasil!")

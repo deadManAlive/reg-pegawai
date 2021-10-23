@@ -1,5 +1,8 @@
 //main program
 #include "reg.h"
+#include "stat.h"
+
+#define DATABASE "data_pegawai.csv"
 
 int main(){
     //start of data parsing process
@@ -69,6 +72,7 @@ int main(){
         printf("d. daftar\n");
         printf("r. hapus data\n");
         printf("v. lihat data\n");
+        printf("s. lihat statistik\n");
         printf("x. keluar\n");
         printf("Masukkan input: ");
 
@@ -87,6 +91,10 @@ int main(){
                 rowquicksort(sNIP, sNama, sGender, sGol, 0, asize - 1);
                 dataPrint(sNIP, sNama, sGender, sGol, &asize);
                 getchar(); //eliminate \n
+                break;
+            case 's':
+                viewStat(sNIP, sNama, sGender, sGol, asize);
+                getchar();
                 break;
             case 'x':
                 printf("~~EXIT~~");
@@ -116,7 +124,7 @@ int main(){
     destroy(sGol, asize);
     free(sGender);
     
-    getc(stdin); //press any key...
+    getchar(); //press any key...
 
     return 0;
 }

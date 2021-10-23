@@ -5,8 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define DATABASE "data_pegawai.csv"
-
 //BOOL
 typedef enum _boolenum {
     true = 1,

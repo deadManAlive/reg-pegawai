@@ -2,6 +2,15 @@
 
 #define ALLOCERR printf("!!Error in Allocation!!\n");
 
+bool exitTest(const char* input){
+    if(strlen(input) == 1 && input[0] == 'X'){
+        return true;
+    }
+    else{
+        false;
+    }
+}
+
 void rowswap(char** nip, char** nama, char* gender, char** gol, int posA, int posB){
     char tnip[20];
     char tnama[50];
@@ -72,16 +81,26 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
     while(inputloop){
         //input phase
         printf("\n==REGISTRASI==\n");
+        printf("(Masukkan 'X' untuk membatalkan)\n");
 
         printf("Nama <Maks. 48 karakter termasuk spasi>                     : ");
         fgets(namactr, 50, stdin);
         namactr[strcspn(namactr, "\n")] = 0;
+
+        if(exitTest(namactr) == true){
+            printf("Proses dibatalkan...\n");
+            return;
+        }
 
         printf("NIP <18 Angka>                                              : ");
         fgets(nipctr, 20, stdin);
         nipctr[strcspn(nipctr, "\n")] = 0;
 
         //nip check mech.
+        if(exitTest(nipctr) == true){
+            printf("Proses dibatalkan...\n");
+            return;
+        }
         if(strlen(nipctr) != 18){
             printf("NIP tidak valid!\n");
             continue;
@@ -95,16 +114,60 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
         fgets(genderctr, 4, stdin);
         genderctr[strcspn(genderctr, "\n")] = 0;
 
+        //gender check
+        if(genderctr[0] == 'X'){
+            printf("Proses dibatalkan...\n");
+            return;
+        }
+        if(genderctr[0] != 'L' && genderctr[0] != 'P'){
+            printf("Kelamin tidak valid! (L/P)\n");
+            continue;
+        }
+
         printf("Golongan <format: X-Y dengan X (1,2,3,4) dan Y (A,B,C,D)>   : ");
         fgets(golctr, 5, stdin);
         golctr[strcspn(golctr, "\n")] = 0;
+
+        //gol cek
+        if(exitTest(golctr) == true){
+            printf("Proses dibatalkan...\n");
+            return;
+        }
+        switch(golctr[0]){
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+                break;
+            default:
+                printf("Golongan tidak valid! (0)\n");
+                continue;
+        }
+        if(golctr[1] != '-'){
+            printf("Golongan tidak valid! (1)\n");
+        }
+        switch(golctr[2]){
+            case 'A':
+            case 'B':
+            case 'C':
+            case 'D':
+                break;
+            case 'E':
+                if(golctr[0] != '4'){
+                    printf("Golongan tidak valid! (3)\n");
+                    continue;
+                }
+            default:
+                printf("Golongan tidak valid! (2)\n");
+                continue;
+        }
 
         //verf. phase
         printf("\n~~verifikasi~~\n");
         printf("%-*s%-20s%-7s%-s\n", strlen(namactr)>4?strlen(namactr)+1:5, "Nama", "NIP", "Gender", "Golongan");
         printf("%-*s%-20s%-7c%s\n\n", strlen(namactr)>4?strlen(namactr)+1:5, namactr, nipctr, genderctr[0], golctr);
 
-        printf("Apakah data sudah benar? [y/n]: ");
+        printf("Apakah data sudah benar? [y/n/x]: ");
         verfresp = getc(stdin);
         if(verfresp == 'y'){
             int nsize = ++(*current_size);
@@ -154,10 +217,14 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
 
             inputloop = false;
         }
+        else if(verfresp == 'x'){
+            printf("Input data baru dibatalkan...\n");
+            inputloop = false;
+            clearbuffer();
+        }
         else{
             clearbuffer();
         }
-
     }
 }
 
@@ -175,9 +242,14 @@ void removeData(char** nip, char** nama, char* gender, char** gol, int* current_
     char verfresp[5];
 
     while(inputloop){
-        printf("Masukkan NIP: ");
+        printf("Masukkan NIP ('X' untuk membatalkan): ");
         fgets(nipctr, 20, stdin);
         nipctr[strcspn(nipctr, "\n")] = 0;
+
+        if(exitTest(nipctr) == true){
+            printf("Proses dibatalkan...\n");
+            return;
+        }
 
         int pos = getData(nip, *current_size, nipctr);
 
