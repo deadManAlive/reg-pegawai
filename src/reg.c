@@ -1,4 +1,4 @@
-#include "reg.h"
+#include <reg.h>
 
 #define ALLOCERR printf("!!Error in Allocation!!\n");
 
@@ -7,7 +7,7 @@ bool exitTest(const char* input){
         return true;
     }
     else{
-        false;
+        return false;
     }
 }
 

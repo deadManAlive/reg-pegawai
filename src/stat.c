@@ -1,4 +1,4 @@
-#include "stat.h"
+#include <stat.h>
 
 void viewStat(char** nip, char** nama, char* gender, char** gol, int size){
     int nmale = 0; //jumlah L

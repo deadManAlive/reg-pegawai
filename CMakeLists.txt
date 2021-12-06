@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.0.0)
-project(regpegawai VERSION 0.1.0 LANGUAGES C)
+cmake_minimum_required(VERSION 3.20.0)
+project(regpegawai VERSION 0.0.2 LANGUAGES C)
 
 include_directories(include)
 

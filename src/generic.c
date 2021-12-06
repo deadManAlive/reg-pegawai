@@ -1,6 +1,7 @@
-#include "generic.h"
 #include <string.h>
 #include <math.h>
+
+#include <generic.h>
 
 void clearbuffer(void){
     while(getc(stdin) != '\n'){}
