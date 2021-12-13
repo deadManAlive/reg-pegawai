@@ -56,5 +56,6 @@ employees_df = pd.DataFrame(list_of_employees, columns=['NIP', 'Nama', 'Kelamin'
 pd.set_option('display.max_columns', None)
 
 employees_df.to_csv('data_pegawai.csv', index=False, header=True, sep=';')
+employees_df.to_csv('devcpp-build/build/data_pegawai.csv', index=False, header=True, sep=';') #if using devcpp
 
 print("Berhasil!")

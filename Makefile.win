@@ -1,39 +1,42 @@
 # Project: RegPegawai
 # Makefile created by Dev-C++ 4.9.9.2
 
-CPP  = g++.exe
-CC   = gcc.exe
+CPP  = g++.exe -D__DEBUG__
+CC   = gcc.exe -D__DEBUG__
 WINDRES = windres.exe
 RES  = 
-OBJ  = src/generic.o src/main.o src/reg.o src/stat.o $(RES)
-LINKOBJ  = src/generic.o src/main.o src/reg.o src/stat.o $(RES)
-LIBS =  -L"D:/Apps_c/Dev-Cpp/lib"  
-INCS =  -I"D:/Apps_c/Dev-Cpp/include" 
-CXXINCS =  -I"D:/Apps_c/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"D:/Apps_c/Dev-Cpp/include/c++/3.4.2/backward"  -I"D:/Apps_c/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"D:/Apps_c/Dev-Cpp/include/c++/3.4.2"  -I"D:/Apps_c/Dev-Cpp/include" 
-BIN  = RegPegawai.exe
-CXXFLAGS = $(CXXINCS)   -std=c99
-CFLAGS = $(INCS)   -std=c99
+OBJ  = devcpp-build/object/container.o devcpp-build/object/generic.o devcpp-build/object/main.o devcpp-build/object/reg.o devcpp-build/object/stat.o $(RES)
+LINKOBJ  = devcpp-build/object/container.o devcpp-build/object/generic.o devcpp-build/object/main.o devcpp-build/object/reg.o devcpp-build/object/stat.o $(RES)
+LIBS =  -L"D:/Apps_c/Dev-Cpp/lib"  -lgmon -pg  -g3 
+INCS =  -I"D:/Apps_c/Dev-Cpp/include"  -I"D:/null_/algpro/UTSpdevcpp/include" 
+CXXINCS =  -I"D:/Apps_c/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"D:/Apps_c/Dev-Cpp/include/c++/3.4.2/backward"  -I"D:/Apps_c/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"D:/Apps_c/Dev-Cpp/include/c++/3.4.2"  -I"D:/Apps_c/Dev-Cpp/include"  -I"D:/null_/algpro/UTSpdevcpp/include" 
+BIN  = devcpp-build/build/RegPegawai.exe
+CXXFLAGS = $(CXXINCS)   -std=c99 -pg -g3
+CFLAGS = $(INCS)   -std=c99 -pg -g3
 RM = rm -f
 
 .PHONY: all all-before all-after clean clean-custom
 
-all: all-before RegPegawai.exe all-after
+all: all-before devcpp-build/build/RegPegawai.exe all-after
 
 
 clean: clean-custom
 	${RM} $(OBJ) $(BIN)
 
 $(BIN): $(OBJ)
-	$(CC) $(LINKOBJ) -o "RegPegawai.exe" $(LIBS)
+	$(CC) $(LINKOBJ) -o "devcpp-build\build\RegPegawai.exe" $(LIBS)
 
-src/generic.o: src/generic.c 
-	$(CC) -c src/generic.c -o src/generic.o $(CFLAGS)
+devcpp-build/object/container.o: src/container.c 
+	$(CC) -c src/container.c -o devcpp-build/object/container.o $(CFLAGS)
 
-src/main.o: src/main.c 
-	$(CC) -c src/main.c -o src/main.o $(CFLAGS)
+devcpp-build/object/generic.o: src/generic.c 
+	$(CC) -c src/generic.c -o devcpp-build/object/generic.o $(CFLAGS)
 
-src/reg.o: src/reg.c 
-	$(CC) -c src/reg.c -o src/reg.o $(CFLAGS)
+devcpp-build/object/main.o: src/main.c 
+	$(CC) -c src/main.c -o devcpp-build/object/main.o $(CFLAGS)
 
-src/stat.o: src/stat.c 
-	$(CC) -c src/stat.c -o src/stat.o $(CFLAGS)
+devcpp-build/object/reg.o: src/reg.c 
+	$(CC) -c src/reg.c -o devcpp-build/object/reg.o $(CFLAGS)
+
+devcpp-build/object/stat.o: src/stat.c 
+	$(CC) -c src/stat.c -o devcpp-build/object/stat.o $(CFLAGS)

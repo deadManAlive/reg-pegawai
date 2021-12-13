@@ -6,6 +6,7 @@ build/**
 cmake-build*/**
 .vs/**
 out/**
+*-build/**
 
 # files
 *.exe
