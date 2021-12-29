@@ -1,7 +1,9 @@
 #ifndef CONTAINER_H_
 #define CONTAINER_H_
 
-//Linked List
-#include "linkedlist.h"
+//containers
+#include "stack.h"
+#include "queue.h"
+#include "tree.h"
 
 #endif

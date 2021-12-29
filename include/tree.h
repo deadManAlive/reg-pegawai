@@ -1,14 +1,15 @@
 #ifndef TREE_H_
 #define TREE_H_
 
-//simple tree implementation of "trie" data struct.
+//simple tree implementation of BST "trie" data struct.
+//used in name search.
 #include "gtypes.h"
 #include <stdbool.h>
 #include "linkedlist.h"
 
 typedef struct StructOfATrieNode {
     struct StructOfATrieNode* children[ASCIISIZE];
-    bool isEnd;                         //is node represent end of a word?
+    bool isEnd;                         //is node marks end of a word?
     ListNode* dataPtrToMainContainer;   //if isEnd = false, this is NULL. ??redundant??
 } TrieNode;
 

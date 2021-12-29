@@ -12,7 +12,7 @@ typedef struct LinkedListNode{
     struct LinkedListNode* next;
 } ListNode;
 
-ListNode* constructList(CONSTR nip, CONSTR nama, char gender, CONSTR gol);
+ListNode constructList(CONSTR nip, CONSTR nama, char gender, CONSTR gol);
 void insert(ListNode** head, CONSTR nip, CONSTR nama, char gender, CONSTR gol);
 int delete(ListNode** head, CONSTR nip_query);
 void printList(const ListNode* head);

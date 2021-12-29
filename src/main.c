@@ -1,7 +1,7 @@
 //main program
 #include <reg.h>
 #include <stat.h>
-// #include "container.h"
+#include <container.h>
 
 #define DATABASE "data_pegawai.csv"
 
@@ -20,18 +20,11 @@ int main(){
     }
     
     int asize = size - 1; //size without header
-    
-    //container construction
-    char **sNIP = malloc(asize * sizeof(char*));
-    char **sNama = malloc(asize * sizeof(char*));
-    char *sGender = malloc(asize * sizeof(char));
-    char **sGol = malloc(asize * sizeof(char*));
 
-    for(int i = 0; i < asize; i++){
-        sNIP[i] = (char*)malloc(20);
-        sNama[i] = (char*)malloc(50);
-        sGol[i] = (char*)malloc(5);
-    }
+    char cnip[20];
+    char cnama[50];
+    char cgender;
+    char cgol[5];
 
     fseek(data, 0, SEEK_SET);
     
@@ -44,20 +37,20 @@ int main(){
         if(strcmp(csv_line_ctr, "\n") != 0){
             //NIP
             char* tbuff = strtok(csv_line_ctr, ";");
-            strcpy(sNIP[pos], tbuff);
+            strcpy(cnip, tbuff);
 
             //Nama
             tbuff = strtok(NULL, ";");
-            strcpy(sNama[pos], tbuff);
+            strcpy(cnama, tbuff);
 
             //Kelamin
             tbuff = strtok(NULL, ";");
             strcpy(gdrctr, tbuff);
-            sGender[pos] = tbuff[0];
+            cgender = tbuff[0];
 
             //Golongan
             tbuff = strtok(NULL, ":");
-            strcpy(sGol[pos], tbuff);
+            strcpy(cgol, tbuff);
         }
         pos++;
     }
@@ -82,19 +75,19 @@ int main(){
         switch(inputopt){
             case 'd':
                 getchar(); //eliminate \n
-                addData(sNIP, sNama, sGender, sGol, &asize);
+                // addData(sNIP, sNama, sGender, sGol, &asize);
                 break;
             case 'r':
                 getchar();
-                removeData(sNIP, sNama, sGender, sGol, &asize);
+                // removeData(sNIP, sNama, sGender, sGol, &asize);
                 break;
             case 'v':
-                rowquicksort(sNIP, sNama, sGender, sGol, 0, asize - 1);
-                dataPrint(sNIP, sNama, sGender, sGol, &asize);
+                // rowquicksort(sNIP, sNama, sGender, sGol, 0, asize - 1);
+                // dataPrint(sNIP, sNama, sGender, sGol, &asize);
                 getchar(); //eliminate \n
                 break;
             case 's':
-                viewStat(sNIP, sNama, sGender, sGol, asize);
+                // viewStat(sNIP, sNama, sGender, sGol, asize);
                 getchar();
                 break;
             case 'x':
@@ -115,15 +108,10 @@ int main(){
     fputs("NIP;Nama;Kelamin;Golongan\n", data); //header
     char linectr[100];
     for(int i = 0; i < asize; i++){
-        fprintf(data, "%s;%s;%c;%s\n", sNIP[i], sNama[i], sGender[i], sGol[i]);
+        // fprintf(data, "%s;%s;%c;%s\n", sNIP[i], sNama[i], sGender[i], sGol[i]);
     }
 
     fclose(data);
-
-    destroy(sNIP, asize);
-    destroy(sNama, asize);
-    destroy(sGol, asize);
-    free(sGender);
     
     getchar(); //press any key...
 
