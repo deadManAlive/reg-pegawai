@@ -2,6 +2,7 @@
 #define LINKEDLIST_H_
 
 #include "gtypes.h"
+#include "historylist.h"
 
 //sorted linked list
 typedef struct LinkedListNode{
@@ -19,7 +20,7 @@ void printList(const ListNode* head);
 
 //positional methods
 int getSize(const ListNode* head);
-ListNode *getByPosition(const ListNode* head, const int pos);
+ListNode *getByPosition(ListNode* head, const int pos);
 int deleteByPosition(ListNode** head, const int pos);
 
 #endif

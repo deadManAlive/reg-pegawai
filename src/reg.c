@@ -1,4 +1,5 @@
 #include <reg.h>
+#include <math.h>
 
 #define ALLOCERR printf("!!Error in Allocation!!\n");
 
@@ -68,7 +69,7 @@ int getData(char** nip, int size, const char* query){
 }
 
 
-void addData(char** nip, char** nama, char* gender, char** gol, int* current_size){
+void addData(char** nip, char** nama, char* gender, char** gol, int* current_size, ListNode** list, HNode* hist){
     //new data container
     char nipctr[20];
     char namactr[50];
@@ -183,6 +184,7 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
                 return;
             }
 
+            
             char* tnama = realloc(*nama, nsize);
             if(tnama){
                 *nama = tnama;
@@ -194,7 +196,9 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
                 return;
             }
 
+            printf("\n===IN===\n"); //test
             char* tgender = realloc(gender, nsize);
+            printf("\n===TEST===\n"); //test
             if(tgender){
                 gender = tgender;
                 gender[nsize - 1] = genderctr[0];
@@ -214,8 +218,12 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
                 ALLOCERR
                 return;
             }
+            printf("\n===OUT===\n"); //test
 
             inputloop = false;
+
+            insert(list, nipctr, namactr, genderctr[0], golctr);
+            newAction(hist, ADD_DATA, nipctr);
         }
         else if(verfresp == 'x'){
             printf("Input data baru dibatalkan...\n");
@@ -228,7 +236,7 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
     }
 }
 
-void removeData(char** nip, char** nama, char* gender, char** gol, int* current_size){
+void removeData(char** nip, char** nama, char* gender, char** gol, int* current_size, ListNode** list, HNode* hist){
     if(*current_size == 0){
         printf("Database kosong!");
         return;
@@ -314,5 +322,28 @@ void removeData(char** nip, char** nama, char* gender, char** gol, int* current_
         }
 
         inputloop = false;
+
+        delete(list, nipctr);
+        newAction(hist, REM_DATA, nipctr);
+    }
+}
+
+void dataPrint(char** nip, char** nama, char* gender, char** gol, int* current_size){
+    //print consistent tab size on No.
+    int tabsize = log10(*current_size) + 1;
+    tabsize = tabsize>1?tabsize:2;
+    tabsize++;
+
+    //resize name column
+    int nmax = 0;
+    int ssize;
+    for(int i = 0; i < *current_size; i++){
+        ssize = strlen(nama[i]);
+        nmax = ssize>nmax?ssize:nmax;
+    }
+
+    printf("%*s. %-20s%-*s%-8s%-s\n", tabsize, "No", "NIP", nmax + 1, "Nama", "Gender", "Golongan");
+    for(int i = 0; i < *current_size; i++){
+        printf("%*d. %-20s%-*s%-8c%-s\n", tabsize, i + 1, nip[i], nmax + 1, nama[i], gender[i], gol[i]);
     }
 }

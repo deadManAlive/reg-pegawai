@@ -177,7 +177,7 @@ int getSize(const ListNode* head){
 }
 
 //get node by position,returns pointer to node
-ListNode *getByPosition(const ListNode* head, const int pos){
+ListNode *getByPosition(ListNode* head, const int pos){
     ListNode* current = head;
     int seek = 0;
 

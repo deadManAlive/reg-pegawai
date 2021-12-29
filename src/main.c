@@ -1,7 +1,6 @@
 //main program
 #include <reg.h>
 #include <stat.h>
-#include <container.h>
 
 #define DATABASE "data_pegawai.csv"
 
@@ -24,15 +23,15 @@ int main(){
     
     int asize = size - 1; //size without header
 
-    STR *sNIP = malloc(asize * sizeof(STR));
-    STR *sNama = malloc(asize * sizeof(STR));
+    char **sNIP = malloc(asize * sizeof(char*));
+    char **sNama = malloc(asize * sizeof(char*));
     char *sGender = malloc(asize * sizeof(char));
-    STR *sGol = malloc(asize * sizeof(STR));
+    char **sGol = malloc(asize * sizeof(char*));
 
     for(int i = 0; i < asize; i++){
-        sNIP[i] = malloc(20);
-        sNama[i] = malloc(50);
-        sGol[i] = malloc(5);
+        sNIP[i] = (char*)malloc(20);
+        sNama[i] = (char*)malloc(50);
+        sGol[i] = (char*)malloc(5);
     }
 
     fseek(data, 0, SEEK_SET);
@@ -78,6 +77,10 @@ int main(){
     for(int i = 1; i < asize; i++){
         insert(&mainContainer, sNIP[i], sNama[i], sGender[i], sGol[i]);
     }
+
+    HNode* histContainer = malloc(sizeof(HNode));
+    *histContainer = constructHist();
+
     //end of array to container
 
     //user interface loop
@@ -91,6 +94,7 @@ int main(){
         printf("r. hapus data\n");
         printf("v. lihat data\n");
         printf("s. lihat statistik\n");
+        printf("h. lihat riwayat perintah /BARU/\n");
         printf("x. keluar\n");
         printf("Masukkan input: ");
 
@@ -99,19 +103,25 @@ int main(){
         switch(inputopt){
             case 'd':
                 getchar(); //eliminate \n
-                addData(sNIP, sNama, sGender, sGol, &asize);
+                addData(sNIP, sNama, sGender, sGol, &asize, &mainContainer, histContainer);
                 break;
             case 'r':
                 getchar();
-                removeData(sNIP, sNama, sGender, sGol, &asize);
+                removeData(sNIP, sNama, sGender, sGol, &asize, &mainContainer, histContainer);
                 break;
             case 'v':
                 rowquicksort(sNIP, sNama, sGender, sGol, 0, asize - 1);
                 dataPrint(sNIP, sNama, sGender, sGol, &asize);
+                newAction(histContainer, SORT_AND_VIEW, "SORTED AND VIEWED.");
                 getchar(); //eliminate \n
                 break;
             case 's':
                 viewStat(sNIP, sNama, sGender, sGol, asize);
+                newAction(histContainer, VIEW_STAT, "VIEWED DATA STAT.");
+                getchar();
+                break;
+            case 'h':
+                viewActions(histContainer);
                 getchar();
                 break;
             case 'x':

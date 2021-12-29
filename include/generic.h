@@ -15,6 +15,5 @@ typedef enum _boolenum {
 //funcs
 void clearbuffer(void);
 void destroy(char** arrstr, int size);
-void dataPrint(char** nip, char** nama, char* gender, char** gol, int* current_size);
 void banner();
 #endif
