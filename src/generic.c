@@ -33,3 +33,17 @@ void dataPrint(char** nip, char** nama, char* gender, char** gol, int* current_s
         printf("%*d. %-20s%-*s%-8c%-s\n", tabsize, i + 1, nip[i], nmax + 1, nama[i], gender[i], gol[i]);
     }
 }
+
+void banner(){
+
+    #ifdef WIN32
+    #define CLEAR "cls"
+    #else
+    #define CLEAR "clear"
+    #endif
+
+    system(CLEAR);
+    printf("==========================\n");
+    printf("PROGRAM PENCATATAN PEGAWAI\n");
+    printf("==========================\n");
+}

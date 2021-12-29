@@ -34,7 +34,7 @@ static int strcasecmp(CONSTR a, CONSTR b){
 #endif
 #endif
 
-//push data after tail
+//append
 static void pushback(ListNode* head, CONSTR nip, CONSTR nama, char gender, CONSTR gol){
     ListNode* current = head;
     ListNode* new = malloc(sizeof(ListNode)); //no need to cast in C
@@ -51,7 +51,7 @@ static void pushback(ListNode* head, CONSTR nip, CONSTR nama, char gender, CONST
     current->next = new;
 }
 
-//push data before head
+//prepend
 static void pushfront(ListNode** head, CONSTR nip, CONSTR nama, char gender, CONSTR gol){
     ListNode* newhead = malloc(sizeof(ListNode));
 
@@ -75,7 +75,7 @@ ListNode constructList(CONSTR nip, CONSTR nama, char gender, CONSTR gol){
     return new;
 }
 
-//NIP-aware data insertion func. to linked list: new inserted data sorted ny NIP
+//NIP-aware data insertion func. to linked list: new inserted data sorted ny NIP, 'addAt' alternative
 void insert(ListNode** head, CONSTR nip, CONSTR nama, char gender, CONSTR gol){
     ListNode* current = *head;
     ListNode* new = malloc(sizeof(ListNode));
@@ -108,6 +108,10 @@ void insert(ListNode** head, CONSTR nip, CONSTR nama, char gender, CONSTR gol){
 }
 
 int delete(ListNode** head, CONSTR nipQuery){
+    if(head==NULL){
+        return -1;
+    }
+
     ListNode* current = *head;
     ListNode* prev = *head;
 
@@ -149,15 +153,72 @@ void printList(const ListNode* head){
     }
 
     int pos = 1;
-    int headerlen = printf("No. %-20s\t%-*s\t%10s\t%10s\n", "NIP", maxnamelen, "Nama", "Gender", "Golongan");
+    int headerlen = printf("No. %-20s %-*s %10s %10s\n", "NIP", maxnamelen, "Nama", "Gender", "Golongan") - 1;
     for(int i = 0; i < headerlen; i++){
         printf("%c", '=');
     }
     printf("\n");
 
     while(head != NULL){
-        printf("%3d %-20s\t%-*s\t%10c\t%10s\n", pos, head->nip, maxnamelen, head->nama, head->gender, head->gol);
+        printf("%3d %-20s %-*s %10c %10s\n", pos, head->nip, maxnamelen, head->nama, head->gender, head->gol);
         head = head->next;
         pos++;
     }
+}
+
+//get linked list size recussively
+int getSize(const ListNode* head){
+    if(head == NULL){
+        return 0;
+    }
+    else{
+        return 1 + getSize(head->next);
+    }
+}
+
+//get node by position,returns pointer to node
+ListNode *getByPosition(const ListNode* head, const int pos){
+    ListNode* current = head;
+    int seek = 0;
+
+    while(current != NULL){
+        if(seek == pos){
+            return current;
+        }
+        seek++;
+        current = current->next;
+    }
+    return NULL;
+}
+
+int deleteByPosition(ListNode** head, const int pos){
+    if(head == NULL){
+        return -1;
+    }
+
+    ListNode* current = *head;
+    ListNode* prev = *head;
+
+    int seek = 0;
+
+    if(pos == 0){
+        *head = current->next;
+        free(current);
+        return seek;
+    }
+    seek++;
+    current = current->next;
+
+    while(current != NULL){
+        if(seek == pos){
+            prev->next = current->next;
+            free(current);
+            return seek;
+        }
+        seek++;
+        prev = prev->next;
+        current = current->next;
+    }
+
+    return -1;
 }

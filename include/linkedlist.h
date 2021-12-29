@@ -17,4 +17,9 @@ void insert(ListNode** head, CONSTR nip, CONSTR nama, char gender, CONSTR gol);
 int delete(ListNode** head, CONSTR nip_query);
 void printList(const ListNode* head);
 
+//positional methods
+int getSize(const ListNode* head);
+ListNode *getByPosition(const ListNode* head, const int pos);
+int deleteByPosition(ListNode** head, const int pos);
+
 #endif
