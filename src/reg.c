@@ -69,7 +69,7 @@ int getData(char** nip, int size, const char* query){
 }
 
 
-void addData(char** nip, char** nama, char* gender, char** gol, int* current_size, ListNode** list, HNode* hist){
+void addData(char** nip, char** nama, char** gender, char** gol, int* current_size, ListNode** list, HNode* hist){
     //new data container
     char nipctr[20];
     char namactr[50];
@@ -171,6 +171,11 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
         printf("Apakah data sudah benar? [y/n/x]: ");
         verfresp = getc(stdin);
         if(verfresp == 'y'){
+            //llimp
+            insert(list, nipctr, namactr, genderctr[0], golctr);
+            newAction(hist, ADD_DATA, nipctr);
+            return;
+
             int nsize = ++(*current_size);
 
             char* tnip = realloc(*nip, nsize);
@@ -197,11 +202,11 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
             }
 
             printf("\n===IN===\n"); //test
-            char* tgender = realloc(gender, nsize);
+            char* tgender = realloc(*gender, nsize);
             printf("\n===TEST===\n"); //test
             if(tgender){
-                gender = tgender;
-                gender[nsize - 1] = genderctr[0];
+                *gender = tgender;
+                *gender[nsize - 1] = genderctr[0];
             }
             else{
                 ALLOCERR
@@ -221,9 +226,6 @@ void addData(char** nip, char** nama, char* gender, char** gol, int* current_siz
             printf("\n===OUT===\n"); //test
 
             inputloop = false;
-
-            insert(list, nipctr, namactr, genderctr[0], golctr);
-            newAction(hist, ADD_DATA, nipctr);
         }
         else if(verfresp == 'x'){
             printf("Input data baru dibatalkan...\n");
@@ -278,6 +280,10 @@ void removeData(char** nip, char** nama, char* gender, char** gol, int* current_
             return;
         }
 
+        delete(list, nipctr);
+        newAction(hist, REM_DATA, nipctr);
+        return;
+
         //element removal proc.
         int nsize = --(*current_size);
         for(int i = pos; i < nsize; i++){
@@ -322,9 +328,6 @@ void removeData(char** nip, char** nama, char* gender, char** gol, int* current_
         }
 
         inputloop = false;
-
-        delete(list, nipctr);
-        newAction(hist, REM_DATA, nipctr);
     }
 }
 

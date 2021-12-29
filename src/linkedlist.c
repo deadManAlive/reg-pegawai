@@ -9,30 +9,30 @@
 Implemented as non-standard c func.
 Use DIY implementation if compiler doesn't provide one.
 */
-#ifndef strcasecmp  //gcc?
-#ifndef stricmp     //msvc?
-static int strcasecmp(CONSTR a, CONSTR b){
-    if(a == NULL || b == NULL){
-        return 0;
-    }
+// #ifndef strcasecmp  //gcc?
+// #ifndef stricmp     //msvc?
+// static int strcasecmp(CONSTR a, CONSTR b){
+//     if(a == NULL || b == NULL){
+//         return 0;
+//     }
 
-    int diff;
-    int minlen = (strlen(a) < strlen(b))?strlen(a):strlen(b);
-    for(int i = 0; i < minlen; i++){
-        diff = tolower(a[i]) - tolower(b[i]);
-        if(diff != 0 && a[i] != '\n' && b[i] != '\n'){
-            return diff;
-        }
-        if(i + 1 == minlen && strlen(a) != strlen(b)){
-            return tolower(a[i + 1]) - tolower(b[i + 1]);
-        }
-    }
-    return 0;
-}
-#else
-#define strcasecmp stricmp
-#endif
-#endif
+//     int diff;
+//     int minlen = (strlen(a) < strlen(b))?strlen(a):strlen(b);
+//     for(int i = 0; i < minlen; i++){
+//         diff = tolower(a[i]) - tolower(b[i]);
+//         if(diff != 0 && a[i] != '\n' && b[i] != '\n'){
+//             return diff;
+//         }
+//         if(i + 1 == minlen && strlen(a) != strlen(b)){
+//             return tolower(a[i + 1]) - tolower(b[i + 1]);
+//         }
+//     }
+//     return 0;
+// }
+// #else
+// #define strcasecmp stricmp
+// #endif
+// #endif
 
 //append
 static void pushback(ListNode* head, CONSTR nip, CONSTR nama, char gender, CONSTR gol){

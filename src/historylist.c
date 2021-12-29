@@ -52,7 +52,7 @@ void viewActions(const HNode* head){
                 strcpy(event, "UB");
         }
 
-        printf("%s %s %s\n", event, head->info, ctime(&(head->timestamp)));
+        printf("%-5s %-20s %s", event, head->info, ctime(&(head->timestamp)));
         head = head->next;
     }
 }
