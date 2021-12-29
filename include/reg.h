@@ -9,7 +9,7 @@
 
 //Function to input data, add to array, and increment current data size
 void rowquicksort(char** nip, char** nama, char* gender, char** gol, int low, int high);
-void addData(char** nip, char** nama, char* gender, char** gol, int* current_size, ListNode** list, HNode* hist);
+void addData(char** nip, char** nama, char** gender, char** gol, int* current_size, ListNode** list, HNode* hist);
 void removeData(char** nip, char** nama, char* gender, char** gol, int* current_size, ListNode** list, HNode* hist);
 void dataPrint(char** nip, char** nama, char* gender, char** gol, int* current_size);
 

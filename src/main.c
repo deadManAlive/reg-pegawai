@@ -94,7 +94,7 @@ int main(){
         printf("r. hapus data\n");
         printf("v. lihat data\n");
         printf("s. lihat statistik\n");
-        printf("h. lihat riwayat perintah /BARU/\n");
+        printf("h. lihat riwayat perintah\n");
         printf("x. keluar\n");
         printf("Masukkan input: ");
 
@@ -103,15 +103,16 @@ int main(){
         switch(inputopt){
             case 'd':
                 getchar(); //eliminate \n
-                addData(sNIP, sNama, sGender, sGol, &asize, &mainContainer, histContainer);
+                addData(sNIP, sNama, &sGender, sGol, &asize, &mainContainer, histContainer);
                 break;
             case 'r':
                 getchar();
                 removeData(sNIP, sNama, sGender, sGol, &asize, &mainContainer, histContainer);
                 break;
             case 'v':
-                rowquicksort(sNIP, sNama, sGender, sGol, 0, asize - 1);
-                dataPrint(sNIP, sNama, sGender, sGol, &asize);
+                // rowquicksort(sNIP, sNama, sGender, sGol, 0, asize - 1);
+                // dataPrint(sNIP, sNama, sGender, sGol, &asize);
+                printList(mainContainer);
                 newAction(histContainer, SORT_AND_VIEW, "SORTED AND VIEWED.");
                 getchar(); //eliminate \n
                 break;
@@ -142,7 +143,8 @@ int main(){
     fputs("NIP;Nama;Kelamin;Golongan\n", data); //header
     char linectr[100];
     for(int i = 0; i < asize; i++){
-        fprintf(data, "%s;%s;%c;%s\n", sNIP[i], sNama[i], sGender[i], sGol[i]);
+        fprintf(data, "%s;%s;%c;%s\n", mainContainer->nip, mainContainer->nama, mainContainer->gender, mainContainer->gol);
+        mainContainer = mainContainer->next;
     }
 
     fclose(data);

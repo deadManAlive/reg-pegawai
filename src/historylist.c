@@ -28,8 +28,8 @@ int newAction(HNode* head, const action event, CONSTR info){
 }
 
 void viewActions(const HNode* head){
-    printf("===COMMAND HISTORY===\n");
-    printf("=====================\n");
+    printf("===RUNTIME COMMAND HISTORY===\n");
+    printf("=============================\n");
     while(head != NULL){
         char event[5];
         switch(head->event){
@@ -52,7 +52,7 @@ void viewActions(const HNode* head){
                 strcpy(event, "UB");
         }
 
-        printf("%s %s %s\n", event, head->info, ctime(&(head->timestamp)));
+        printf("%s %s %s", event, head->info, ctime(&(head->timestamp)));
         head = head->next;
     }
 }
